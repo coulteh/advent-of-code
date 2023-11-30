@@ -7,14 +7,14 @@ This project contains my Advent of Code entries written in Go. At time of writin
 The primary command is invoked with `advent <year> <day>`. There is one additional flag available:
 * `--part2` - Runs the second part of the given day
 
-Attempting to invoke an unimplemented day will result in an error.
+Attempting to invoke an unimplemented day or year will result in an error.
 
 ## Extending
 
 Adding an additional day is relatively straightforward. Some boilerplate is required:
 ```
 func DayX(part2 bool) error {
-	input, err := internal.ReadFile(inputFile)
+	input, err := internal.ReadFile("path/to/file.txt")
 	if err != nil {
 		return err
 	}
