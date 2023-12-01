@@ -2,21 +2,40 @@ package twenty23
 
 import (
 	"advent-of-code/2023/internal"
-	"fmt"
+	"io"
+	"strconv"
+	"unicode"
 )
 
 var inputFile, _ = internal.GetInputPath("dayOne.txt")
 
-func DayOne(part2 bool) error {
-	input, err := internal.ReadFile(inputFile)
+func GetInput() (io.Reader, error) {
+	return internal.ReadFile(inputFile)
+}
+
+func DayOne(r io.Reader, part2 bool) (output string, err error) {
+	input := internal.ReaderToStrings(r)
 	if err != nil {
-		return err
+		return "", err
 	}
+	var total int
 	for _, line := range input {
-		fmt.Println(line)
+		ints := make([]int, 0)
+		for _, char := range line {
+			if unicode.IsDigit(char) {
+				ints = append(ints, int(char-'0'))
+			}
+		}
+		output = strconv.Itoa(ints[0]) + strconv.Itoa(ints[len(ints)-1])
+		outputInt, err := strconv.Atoi(output)
+		if err != nil {
+			return "", err
+		}
+		total += outputInt
+		output = strconv.Itoa(total)
 	}
+	//output = strconv.Itoa(total)
 	if part2 {
-		fmt.Println("part 2")
 	}
-	return nil
+	return output, nil
 }
